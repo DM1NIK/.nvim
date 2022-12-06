@@ -60,7 +60,9 @@ return packer.startup(function(use)
     config = function ()
       require("copilot_cmp").setup()
     end
-  }
+      }
+  -- use 'github/copilot.vim'
+  -- use 'hrsh7th/cmp-copilot'
   -- R BS
   use {
       'folke/neodev.nvim',
