@@ -44,6 +44,14 @@ end
 return packer.startup(function(use)
 
   use 'wbthomason/packer.nvim'
+  -- mongodb
+  use {
+    'thibthib18/mongo-nvim',
+    rocks = {'lua-mongo'},
+    config=function()
+    require 'mongo-nvim'.setup({})
+  end
+  }
   -- copilot
   use {
     "zbirenbaum/copilot.lua",
@@ -61,8 +69,7 @@ return packer.startup(function(use)
       require("copilot_cmp").setup()
     end
       }
-  -- use 'github/copilot.vim'
-  -- use 'hrsh7th/cmp-copilot'
+
   -- R BS
   use {
       'folke/neodev.nvim',
