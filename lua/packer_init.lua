@@ -43,15 +43,27 @@ end
 -- Install plugins
 return packer.startup(function(use)
 
+
+  -- Essential plugins
   use 'wbthomason/packer.nvim'
-  -- mongodb
+
+  use { "nvim-telescope/telescope-file-browser.nvim" }
   use {
-    'thibthib18/mongo-nvim',
-    rocks = {'lua-mongo'},
-    config=function()
-    require 'mongo-nvim'.setup({})
-  end
+      'nvim-telescope/telescope.nvim',
+      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+      config = function() require("telescope").load_extension("mapper") require("telescope").load_extension "file_browser" end
   }
+
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require('hop').setup {  }
+    end
+  }
+
+
   -- copilot
   use {
     "zbirenbaum/copilot.lua",
@@ -68,7 +80,8 @@ return packer.startup(function(use)
     config = function ()
       require("copilot_cmp").setup()
     end
-      }
+  }
+
 
   -- R BS
   use {
@@ -92,7 +105,6 @@ return packer.startup(function(use)
 
   -- Indent line
   use 'lukas-reineke/indent-blankline.nvim'
-
   -- Autopair
   use {
     'windwp/nvim-autopairs',
@@ -108,11 +120,13 @@ return packer.startup(function(use)
   -- Tag viewer
   use 'preservim/tagbar'
 
+
   -- Treesitter interface
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
+
 
   -- Color schemes
   use 'navarasu/onedark.nvim'
@@ -120,9 +134,29 @@ return packer.startup(function(use)
   use { 'rose-pine/neovim', as = 'rose-pine' }
 
 
-  -- LSP
-  use 'neovim/nvim-lspconfig'
+  use {
+      "lazytanuki/nvim-mapper",
+      config = function() require("nvim-mapper").setup{} end,
+      before = "telescope.nvim"
+  }
 
+  use { -- LSP Configuration & Plugins
+    'neovim/nvim-lspconfig',
+    requires = {
+      -- Automatically install LSPs to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+
+      -- Useful status updates for LSP
+      'j-hui/fidget.nvim',
+
+      -- Additional lua configuration, makes nvim stuff amazing
+      'folke/neodev.nvim',
+    },
+  }
+
+
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
   -- Autocomplete
   use {
     'hrsh7th/nvim-cmp',
@@ -134,12 +168,23 @@ return packer.startup(function(use)
       'saadparwaiz1/cmp_luasnip',
     },
   }
+  use { -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  }
 
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
   -- Statusline
   use {
     'feline-nvim/feline.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
   }
+
 
   -- git labels
   use {
@@ -154,6 +199,13 @@ return packer.startup(function(use)
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
+  }
+
+  use {
+    "ahmedkhalf/project.nvim",
+    config = function()
+      require("project_nvim").setup {}
+    end
   }
 
   -- Automatically set up your configuration after cloning packer.nvim

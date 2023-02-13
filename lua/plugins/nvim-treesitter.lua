@@ -28,5 +28,3 @@ nvim_treesitter.setup {
     enable = true,
   },
 }
-
-
