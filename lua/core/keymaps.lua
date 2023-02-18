@@ -82,12 +82,6 @@ map('n', '<leader>q', ':qa!<CR>')
 -- Applications and Plugins shortcuts
 ----------------------------------------------------------
 
-
--- NvimTree
-map('n', '<C-n>', ':NvimTreeToggle<CR>')            -- open/close
-map('n', '<leader>f', ':NvimTreeRefresh<CR>')       -- refresh
-map('n', '<leader>n', ':NvimTreeFindFile<CR>')      -- search file
-
 -- Tagbar
 map('n', '<leader>z', ':TagbarToggle<CR>')          -- open/close
 
@@ -117,8 +111,6 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[F] Fuzzily search in current buffer]' })
 
-
 vim.keymap.set("n", "-", require "telescope".extensions.file_browser.file_browser, { noremap = true })
-
 
 vim.keymap.set("n", "<Leader>p", require('telescope').extensions.projects.projects, { })

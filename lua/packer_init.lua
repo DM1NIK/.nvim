@@ -221,7 +221,7 @@ return packer.startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup({
   size = 10,
-  open_mapping = [[<leader>t]],
+  open_mapping = [[<leader>tt]],
   shading_factor = 2,
   direction = "float",
   float_opts = {
