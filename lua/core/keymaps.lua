@@ -12,6 +12,7 @@ end
 
 -- Change leader to a comma
 vim.g.mapleader = ','
+vim.g.maplocalleader = '\\'
 
 -----------------------------------------------------------
 -- Neovim shortcuts
@@ -36,7 +37,14 @@ vim.opt.pastetoggle = '<F2>'
 -- Terminal
 
 local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true , direction = "float",
+  float_opts = {
+    border = "curved",
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+    },
+  },})
 local pythonterm = Terminal:new({ cmd = "python", hidden = true })
 
 function _lazygit_toggle()
@@ -48,16 +56,16 @@ function _python_toggle()
 end
 
 if vim.fn.executable "lazygit" == 1 then
-  map("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+  map("n", "<localleader>gg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 end
 
 if vim.fn.executable "python" == 1 then
-  map("n", "<leader>tp", "<cmd>lua _python_toggle()<CR>", {noremap = true, silent = true})
+  map("n", "<localleader>tp", "<cmd>lua _python_toggle()<CR>", {noremap = true, silent = true})
 end
 
-map('n', '<leader>tf', '<cmd>ToggleTerm direction=float<cr>')
-map('n', '<leader>th', '<cmd>ToggleTerm size=10 direction=horizontal<cr>')
-map('n', '<leader>tv', '<cmd>ToggleTerm size=80 direction=vertical<cr>')
+map('n', '<localleader>tf', '<cmd>ToggleTerm direction=float<cr>')
+map('n', '<localleader>h', '<cmd>ToggleTerm size=10 direction=horizontal<cr>')
+map('n', '<localleader>k', '<cmd>ToggleTerm size=80 direction=vertical<cr>')
 
 -- Change split orientation
 map('n', '<leader>tk', '<C-w>t<C-w>K') -- change vertical to horizontal
