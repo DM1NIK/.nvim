@@ -33,6 +33,32 @@ map('n', '<leader>c', ':nohl<CR>')
 map('n', '<F2>', ':set invpaste paste?<CR>')
 vim.opt.pastetoggle = '<F2>'
 
+-- Terminal
+
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+local pythonterm = Terminal:new({ cmd = "python", hidden = true })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+function _python_toggle()
+  pythonterm:toggle()
+end
+
+if vim.fn.executable "lazygit" == 1 then
+  map("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+end
+
+if vim.fn.executable "python" == 1 then
+  map("n", "<leader>tp", "<cmd>lua _python_toggle()<CR>", {noremap = true, silent = true})
+end
+
+map('n', '<leader>tf', '<cmd>ToggleTerm direction=float<cr>')
+map('n', '<leader>th', '<cmd>ToggleTerm size=10 direction=horizontal<cr>')
+map('n', '<leader>tv', '<cmd>ToggleTerm size=80 direction=vertical<cr>')
+
 -- Change split orientation
 map('n', '<leader>tk', '<C-w>t<C-w>K') -- change vertical to horizontal
 map('n', '<leader>th', '<C-w>t<C-w>H') -- change horizontal to vertical
@@ -72,22 +98,16 @@ vim.keymap.set('', 'f', function()
   hop.hint_patterns({ multi_windows = true })
 end, {remap=true})
 vim.keymap.set('', 'F', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
-end, {remap=true})
-vim.keymap.set('', 't', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, {remap=true})
-vim.keymap.set('', 'T', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
 end, {remap=true})
 
 -- telescope
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>h', require('telescope.builtin').oldfiles, { desc = '[S]earch [H]istory' })
+vim.keymap.set('n', '<leader>w', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>g', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>sm', require('telescope.builtin').marks, { desc = '[S]how [M]arks' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
@@ -95,14 +115,10 @@ vim.keymap.set('n', '<leader>/', function()
     winblend = 10,
     previewer = false,
   })
-end, { desc = '[/] Fuzzily search in current buffer]' })
+end, { desc = '[F] Fuzzily search in current buffer]' })
 
 
-vim.keymap.set(
-"n",
-"-",
-require "telescope".extensions.file_browser.file_browser,
-{ noremap = true }
-)
+vim.keymap.set("n", "-", require "telescope".extensions.file_browser.file_browser, { noremap = true })
+
 
 vim.keymap.set("n", "<Leader>p", require('telescope').extensions.projects.projects, { })

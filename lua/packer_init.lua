@@ -121,13 +121,6 @@ return packer.startup(function(use)
   use 'preservim/tagbar'
 
 
-  -- Treesitter interface
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-  }
-
-
   -- Color schemes
   use 'navarasu/onedark.nvim'
   use 'tanvirtin/monokai.nvim'
@@ -186,7 +179,7 @@ return packer.startup(function(use)
   }
 
 
-  -- git labels
+  -- git
   use {
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
@@ -194,6 +187,7 @@ return packer.startup(function(use)
       require('gitsigns').setup{}
     end
   }
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
   -- Dashboard (start screen)
   use {
@@ -208,6 +202,37 @@ return packer.startup(function(use)
     end
   }
 
+  -- QOL
+  use {
+    'lewis6991/impatient.nvim',
+    config = function()
+      require("impatient").enable_profile()
+    end
+  }
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
+
+  -- terminal support
+  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup({
+  size = 10,
+  open_mapping = [[<leader>t]],
+  shading_factor = 2,
+  direction = "float",
+  float_opts = {
+    border = "curved",
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+    },
+  },
+})
+  end}
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
