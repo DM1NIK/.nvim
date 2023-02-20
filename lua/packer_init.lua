@@ -220,19 +220,13 @@ return packer.startup(function(use)
   -- terminal support
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup({
-  size = 10,
-  open_mapping = [[<localleader>t]],
-  shading_factor = 2,
-  direction = "float",
-  float_opts = {
-    border = "curved",
-    highlights = {
-      border = "Normal",
-      background = "Normal",
-    },
-  },
-})
-  end}
+      size = 10,
+      open_mapping = [[<localleader>t]],
+      shading_factor = 2,
+      direction = "tab",
+    })
+    end}
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then

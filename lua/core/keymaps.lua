@@ -66,7 +66,7 @@ end
 map('n', '<localleader>tf', '<cmd>ToggleTerm direction=float<cr>')
 map('n', '<localleader>h', '<cmd>ToggleTerm size=10 direction=horizontal<cr>')
 map('n', '<localleader>k', '<cmd>ToggleTerm size=80 direction=vertical<cr>')
-
+map('n', '<localleader>tb', '<cmd>ToggleTerm direction=tab<cr>')
 -- Change split orientation
 map('n', '<leader>tk', '<C-w>t<C-w>K') -- change vertical to horizontal
 map('n', '<leader>th', '<C-w>t<C-w>H') -- change horizontal to vertical

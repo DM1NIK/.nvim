@@ -20,3 +20,4 @@ require('plugins/alpha-nvim')
 require('plugins/mason')
 require('plugins/telescope')
 require('plugins/nvim-treesitter')
+
