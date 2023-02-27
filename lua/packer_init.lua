@@ -113,6 +113,10 @@ return packer.startup(function(use)
     end
   }
 
+
+  -- Latex support
+  use 'lervag/vimtex'
+
   -- Icons
   use 'kyazdani42/nvim-web-devicons'
   use 'preservim/nerdtree'
@@ -147,6 +151,8 @@ return packer.startup(function(use)
       'folke/neodev.nvim',
     },
   }
+
+  -- Obsidian
 
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -198,7 +204,9 @@ return packer.startup(function(use)
   use {
     "ahmedkhalf/project.nvim",
     config = function()
-      require("project_nvim").setup {}
+      require("project_nvim").setup {
+      patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".obsidian" },
+      }
     end
   }
 
